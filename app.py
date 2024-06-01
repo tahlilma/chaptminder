@@ -1,6 +1,6 @@
 from flask import Flask
 from enma import Enma
-from tinydb import TinyDB, Query
+from tinydb import TinyDB
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -41,3 +41,6 @@ def get_updates():
     db.insert(manga)
   
   return { "count" : new_chapters_count, "names": manga_with_new_chapters }
+
+if __name__ == "__main__":
+  app.run()
