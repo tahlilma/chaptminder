@@ -3,7 +3,6 @@ from enma import Enma
 from tinydb import TinyDB
 
 app = Flask(__name__)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 enma = Enma()
 db =  TinyDB("cache.json")
@@ -18,15 +17,12 @@ def home():
 
 @app.route("/get_updates")
 def get_updates():
-  
-  def get_cache():
-    return db.all()
-  
+
   def fetch_manga(id):
     manga = enma.get(identifier=id)
     return { "title": manga.title.english, "chapters": len(manga.chapters) }
 
-  cached_mangas = get_cache();
+  cached_mangas = db.all();
   mangas = list(map(fetch_manga, MANGA_LIST))
   manga_with_new_chapters = []
 
